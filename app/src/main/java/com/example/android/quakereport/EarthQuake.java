@@ -13,8 +13,8 @@ public class EarthQuake {
         mTime = time;
     }
 
-    public double getMag() {
-        return mMag;
+    public String getMag() {
+        return (Double.toString(mMag));
     }
 
     public String getPlace() {

@@ -30,7 +30,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
         EarthQuake earthQuake = getItem(position);
 
         TextView mag_view = (TextView) listItemView.findViewById(R.id.mag);
-        mag_view.setText(earthQuake.getMag()+"");
+        mag_view.setText(earthQuake.getMag());
 
         TextView place_view = (TextView) listItemView.findViewById(R.id.place);
         place_view.setText(earthQuake.getPlace());
