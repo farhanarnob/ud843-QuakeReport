@@ -4,10 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by ${farhanarnob} on ${06-Oct-16}.
@@ -43,17 +40,13 @@ public final class QueryUtils {
         try{
             JSONObject root = new JSONObject(SAMPLE_JSON_RESPONSE);
             JSONArray features =root.getJSONArray("features");
-            Date dateObject;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-DD-yyy \nh:mm:ss", Locale.ENGLISH);
             for(int i =0 ;i<features.length();i++){
                 JSONObject earthquake = features.getJSONObject(i);
                 JSONObject properties = earthquake.getJSONObject("properties");
                 double mag = properties.getDouble("mag");
                 String place = properties.getString("place");
                 long time = properties.getLong("time");
-                dateObject = new Date(time);
-                String dateToDisplay = dateFormat.format(dateObject);
-                earthQuakes.add(new EarthQuake(mag,place,dateToDisplay));
+                earthQuakes.add(new EarthQuake(mag,place,time));
             }
 
         } catch (JSONException e) {

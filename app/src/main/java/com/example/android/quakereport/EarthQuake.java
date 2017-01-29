@@ -6,22 +6,31 @@ package com.example.android.quakereport;
 
 public class EarthQuake {
     private double mMag;
-    private String mPlace, mTime;
-    public EarthQuake(double mag, String place, String time){
+    private String mPlace;
+    private long mTimeMilliseconds;
+
+    /**
+     * constructs a new {@link EarthQuake} object
+     *
+     * @param mag magnitude of of the earthquake
+     * @param place location of the city location of the the earthquake
+     * @param TimeMilliseconds time in milliseconds
+     */
+    public EarthQuake(double mag, String place, long TimeMilliseconds){
         mMag = mag;
         mPlace = place;
-        mTime = time;
+        mTimeMilliseconds = TimeMilliseconds;
     }
 
-    public String getMag() {
-        return (Double.toString(mMag));
+    public Double getMag() {
+        return (mMag);
     }
 
     public String getPlace() {
         return mPlace;
     }
 
-    public String getTime() {
-        return mTime;
+    public long getDateAndTime() {
+        return mTimeMilliseconds;
     }
 }
