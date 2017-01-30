@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -27,7 +27,8 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_vertical|start</item>
-
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
 
 </resources>

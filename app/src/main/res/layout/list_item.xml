@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="70dp"
-    android:orientation="horizontal">
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingEnd="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingStart="16dp">
     <TextView
         android:id="@+id/mag"
-        android:paddingLeft="15dp"
-        style="@style/list_item_style"
+        android:layout_marginLeft="15dp"
+        android:layout_height="36dp"
+        android:layout_width="36dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@android:color/white"
+        android:background="@drawable/magnitude_circle"
+        android:textSize="16sp"
         tools:text="6.1"/>
-    <TextView
-        android:id="@+id/offset_place"
-        style="@style/list_item_style"
-        tools:text="offset place"/>
-    <TextView
-        android:id="@+id/primary_place"
-        style="@style/list_item_style"
-        tools:text="primary place"/>
-    <TextView
-        android:id="@+id/date_of_the_earth_quake"
-        style="@style/list_item_style"
-        tools:text="Mar 6, 2010"/>
-    <TextView
-        android:id="@+id/time_of_earth_quake"
-        style="@style/list_item_style"
-        tools:text="3:38 PM"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/offset_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@color/textColorEarthquakeDetails"
+            tools:text="offset place"/>
+        <TextView
+            android:id="@+id/primary_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/textColorEarthquakeLocation"
+            android:textSize="16sp"
+            tools:text="primary place"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/date_of_the_earth_quake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textColor="@color/textColorEarthquakeDetails"
+            android:textSize="12sp"
+            tools:text="Mar 6, 2010"/>
+        <TextView
+            android:id="@+id/time_of_earth_quake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textColor="@color/textColorEarthquakeDetails"
+            android:textSize="12sp"
+            tools:text="3:38 PM"/>
+    </LinearLayout>
+
+
 </LinearLayout>

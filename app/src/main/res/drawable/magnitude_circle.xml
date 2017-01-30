@@ -5,6 +5,6 @@
     <solid android:color="@color/magnitude1"></solid>
     <size
         android:width="36dp"
-        android:height="26dp"></size>
+        android:height="36dp"></size>
     <corners android:radius="18dp"></corners>
 </shape>
