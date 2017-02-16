@@ -17,13 +17,14 @@ package com.example.android.quakereport;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity {
 
@@ -33,30 +34,55 @@ public class EarthquakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
+        String stringUrl = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+        EarthQuakeAsyncTask earthQuakeAsyncTask = new EarthQuakeAsyncTask();
+        earthQuakeAsyncTask.execute(stringUrl);
 
-        // Create a fake list of earthquake locations.
-        ArrayList<EarthQuake> earthquakes = QueryUtils.extractEarthquakes();
+    }
 
+    private void updateUI(List<EarthQuake> earthQuakes) {
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
         // Create a new {@link ArrayAdapter} of earthquakes
-        final EarthQuakeAdapter  earthQuakeAdapter = new EarthQuakeAdapter(this,earthquakes);
+        final EarthQuakeAdapter earthQuakeAdapter = new EarthQuakeAdapter(this, earthQuakes);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(earthQuakeAdapter);
-
-        // it is used by udacity instructor
+        // it is used by udacity's instructor
         earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 EarthQuake currentEarthquake = earthQuakeAdapter.getItem(position);
                 Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW,earthquakeUri);
+                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
                 startActivity(websiteIntent);
 
             }
         });
+    }
+
+    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, List<EarthQuake>> {
+
+        @Override
+        protected List<EarthQuake> doInBackground(String... stringUrl) {
+            if (stringUrl.length < 1 || stringUrl[0] == null) {
+                return null;
+            }
+            List<EarthQuake> earthQuakes = QueryUtils.fetchEarthquakeData(stringUrl[0]);
+            return earthQuakes;
+        }
+
+        @Override
+        protected void onPostExecute(List<EarthQuake> earthQuakes) {
+            if (earthQuakes == null) {
+                return;
+            }
+            updateUI(earthQuakes);
+            super.onPostExecute(earthQuakes);
+        }
+
+
     }
 }

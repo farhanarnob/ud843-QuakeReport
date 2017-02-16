@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ${farhanarnob} on ${06-Oct-16}.
@@ -21,11 +21,12 @@ import java.util.Date;
 
 public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
     private static  final  String LOCATION_SEPARATOR = " of ";
-    private String offsetPlace = String.valueOf(R.string.near_the);
-    private String mainPlace = "";
     GradientDrawable magnitudeCircle;
     TextView mag_view;
-    public EarthQuakeAdapter(Context context,  ArrayList<EarthQuake> earthQuakes) {
+    private String offsetPlace = String.valueOf(R.string.near_the);
+    private String mainPlace = "";
+
+    public EarthQuakeAdapter(Context context, List<EarthQuake> earthQuakes) {
         super(context, 0, earthQuakes);
     }
 
