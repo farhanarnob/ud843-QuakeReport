@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class EarthquakeLoader extends AsyncTaskLoader<List<EarthQuake>> {
+    public static final String TAG_NAME = EarthquakeLoader.class.getName();
     String USGS_REQUEST_URL;
 
     public EarthquakeLoader(Context context, String USGS_REQUEST_URL) {
@@ -20,7 +21,7 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthQuake>> {
 
     @Override
     public List<EarthQuake> loadInBackground() {
-        Log.d("Earthquake", "loadInBackground");
+        Log.d(TAG_NAME, "loadInBackground");
         if (USGS_REQUEST_URL == null) {
             return null;
         }
@@ -30,7 +31,7 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<EarthQuake>> {
 
     @Override
     protected void onStartLoading() {
-        Log.d("Earthquake", "onStartLoading");
+        Log.d(TAG_NAME, "onStartLoading");
 
         forceLoad();
     }

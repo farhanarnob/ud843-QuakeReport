@@ -43,7 +43,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
-        USGS_REQUEST_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=5&limit=10";
+        USGS_REQUEST_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=9&limit=10";
 //        EarthQuakeAsyncTask earthQuakeAsyncTask = new EarthQuakeAsyncTask();
 //        earthQuakeAsyncTask.execute(USGS_REQUEST_URL);
 
@@ -67,19 +67,19 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
             }
         });
-        Log.d("Earthquake", "initLoader");
+        Log.d(LOG_TAG, "initLoader");
         getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
     }
 
     @Override
     public Loader<List<EarthQuake>> onCreateLoader(int id, Bundle args) {
-        Log.d("Earthquake", "onCreateLoader");
+        Log.d(LOG_TAG, "onCreateLoader");
         return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
 
     @Override
     public void onLoadFinished(Loader<List<EarthQuake>> loader, List<EarthQuake> data) {
-        Log.d("Earthquake", "onLoadFinished");
+        Log.d(LOG_TAG, "onLoadFinished");
         earthQuakeAdapter.clear();
         if (data != null && !data.isEmpty()) {
             earthQuakeAdapter.addAll(data);
@@ -89,7 +89,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoaderReset(Loader<List<EarthQuake>> loader) {
-        Log.d("Earthquake", "onLoaderReset");
+        Log.d(LOG_TAG, "onLoaderReset");
         earthQuakeAdapter.clear();
     }
 

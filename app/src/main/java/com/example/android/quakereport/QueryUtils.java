@@ -22,6 +22,7 @@ import java.util.List;
  */
 
 public final class QueryUtils {
+    public static String TAG_NAME = QueryUtils.class.getName();
     private QueryUtils(){
 
     }
@@ -31,7 +32,7 @@ public final class QueryUtils {
      */
 
     public static List<EarthQuake> fetchEarthquakeData(String requestUrl) {
-        Log.d("Earthquake", "fetchEarthquakeData");
+        Log.d(TAG_NAME, "fetchEarthquakeData");
         URL url = createUrl(requestUrl);
         String jsonResponse = makeHttpRequest(url);
         List<EarthQuake> earthQuakes = extractEarthquakes(jsonResponse);
