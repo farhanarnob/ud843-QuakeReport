@@ -29,8 +29,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<EarthQuake>> {
-
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
+    /**
+     * Constant value for the earthquake loader ID. We can choose any integer.
+     * This really only comes into play if you're using multiple loaders.
+     */
+    private static final int EARTHQUAKE_LOADER_ID = 1;
     String USGS_REQUEST_URL;
     private EarthQuakeAdapter earthQuakeAdapter;
 
@@ -62,7 +66,7 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
             }
         });
-        getSupportLoaderManager().initLoader(1, null, this);
+        getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
     }
 
     @Override
@@ -72,11 +76,16 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<List<EarthQuake>> loader, List<EarthQuake> data) {
-        earthQuakeAdapter.addAll(data);
+        earthQuakeAdapter.clear();
+        if (data != null && !data.isEmpty()) {
+            earthQuakeAdapter.addAll(data);
+        }
+
     }
 
     @Override
     public void onLoaderReset(Loader<List<EarthQuake>> loader) {
+        earthQuakeAdapter.clear();
     }
 
 //    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, List<EarthQuake>> {
