@@ -17,35 +17,36 @@ package com.example.android.quakereport;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class EarthquakeActivity extends AppCompatActivity {
+public class EarthquakeActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<EarthQuake>> {
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
+    String USGS_REQUEST_URL;
+    private EarthQuakeAdapter earthQuakeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
-        String stringUrl = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
-        EarthQuakeAsyncTask earthQuakeAsyncTask = new EarthQuakeAsyncTask();
-        earthQuakeAsyncTask.execute(stringUrl);
+        USGS_REQUEST_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
+//        EarthQuakeAsyncTask earthQuakeAsyncTask = new EarthQuakeAsyncTask();
+//        earthQuakeAsyncTask.execute(USGS_REQUEST_URL);
 
-    }
-
-    private void updateUI(List<EarthQuake> earthQuakes) {
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
         // Create a new {@link ArrayAdapter} of earthquakes
-        final EarthQuakeAdapter earthQuakeAdapter = new EarthQuakeAdapter(this, earthQuakes);
+        earthQuakeAdapter = new EarthQuakeAdapter(this, new ArrayList<EarthQuake>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
@@ -61,28 +62,49 @@ public class EarthquakeActivity extends AppCompatActivity {
 
             }
         });
+        getSupportLoaderManager().initLoader(1, null, this);
     }
 
-    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, List<EarthQuake>> {
-
-        @Override
-        protected List<EarthQuake> doInBackground(String... stringUrl) {
-            if (stringUrl.length < 1 || stringUrl[0] == null) {
-                return null;
-            }
-            List<EarthQuake> earthQuakes = QueryUtils.fetchEarthquakeData(stringUrl[0]);
-            return earthQuakes;
-        }
-
-        @Override
-        protected void onPostExecute(List<EarthQuake> earthQuakes) {
-            if (earthQuakes == null) {
-                return;
-            }
-            updateUI(earthQuakes);
-            super.onPostExecute(earthQuakes);
-        }
-
-
+    @Override
+    public Loader<List<EarthQuake>> onCreateLoader(int id, Bundle args) {
+        return new EarthquakeLoader(this, USGS_REQUEST_URL);
     }
+
+    @Override
+    public void onLoadFinished(Loader<List<EarthQuake>> loader, List<EarthQuake> data) {
+        earthQuakeAdapter.addAll(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<EarthQuake>> loader) {
+    }
+
+//    private class EarthQuakeAsyncTask extends AsyncTask<String, Void, List<EarthQuake>> {
+//
+//        @Override
+//        protected List<EarthQuake> doInBackground(String... stringUrl) {
+//            if (stringUrl.length < 1 || stringUrl[0] == null) {
+//                return null;
+//            }
+//            List<EarthQuake> earthQuakes = QueryUtils.fetchEarthquakeData(stringUrl[0]);
+//            return earthQuakes;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<EarthQuake> earthQuakes) {
+//
+//            if (earthQuakes == null) {
+//                return;
+//            }
+//            if(earthQuakeAdapter!=null){
+//                earthQuakeAdapter.clear();
+//            }
+////            earthQuakeAdapter.clear();
+//            earthQuakeAdapter.clear();
+//            earthQuakeAdapter.addAll(earthQuakes);
+//            super.onPostExecute(earthQuakes);
+//        }
+//
+//
+//    }
 }
