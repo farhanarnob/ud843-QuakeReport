@@ -1,5 +1,7 @@
 package com.example.android.quakereport;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ public final class QueryUtils {
      */
 
     public static List<EarthQuake> fetchEarthquakeData(String requestUrl) {
+        Log.d("Earthquake", "fetchEarthquakeData");
         URL url = createUrl(requestUrl);
         String jsonResponse = makeHttpRequest(url);
         List<EarthQuake> earthQuakes = extractEarthquakes(jsonResponse);
