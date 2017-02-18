@@ -32,6 +32,11 @@ public final class QueryUtils {
      */
 
     public static List<EarthQuake> fetchEarthquakeData(String requestUrl) {
+//        try {
+//            Thread.sleep(20000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         Log.d(TAG_NAME, "fetchEarthquakeData");
         URL url = createUrl(requestUrl);
         String jsonResponse = makeHttpRequest(url);

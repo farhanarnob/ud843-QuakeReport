@@ -25,6 +25,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +39,23 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
      */
     private static final int EARTHQUAKE_LOADER_ID = 1;
     String USGS_REQUEST_URL;
+    private TextView mEmptyStateTextView;
     private EarthQuakeAdapter earthQuakeAdapter;
-
+    private ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
-        USGS_REQUEST_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=9&limit=10";
+        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        mProgressBar = (ProgressBar) findViewById(R.id.loading_spinner);
+        earthquakeListView.setEmptyView(mEmptyStateTextView);
+        USGS_REQUEST_URL = "http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=6&limit=10";
 //        EarthQuakeAsyncTask earthQuakeAsyncTask = new EarthQuakeAsyncTask();
 //        earthQuakeAsyncTask.execute(USGS_REQUEST_URL);
 
         // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+
 
         // Create a new {@link ArrayAdapter} of earthquakes
         earthQuakeAdapter = new EarthQuakeAdapter(this, new ArrayList<EarthQuake>());
@@ -79,6 +86,8 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
 
     @Override
     public void onLoadFinished(Loader<List<EarthQuake>> loader, List<EarthQuake> data) {
+        mProgressBar.setVisibility(View.GONE);
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
         Log.d(LOG_TAG, "onLoadFinished");
         earthQuakeAdapter.clear();
         if (data != null && !data.isEmpty()) {
