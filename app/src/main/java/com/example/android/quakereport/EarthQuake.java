@@ -26,7 +26,11 @@ public class EarthQuake {
     }
 
     public Double getMag() {
-        return (mMag);
+        if (mMag != 0) {
+            return (mMag);
+        } else {
+            return Double.valueOf(0);
+        }
     }
 
     public String getPlace() {
