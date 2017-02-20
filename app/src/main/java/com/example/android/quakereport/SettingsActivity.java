@@ -24,6 +24,9 @@ public class SettingsActivity extends AppCompatActivity {
 
             Preference minMagnitude = findPreference(getString(R.string.settings_min_magnitude_key));
             bindPreferenceSummaryToValue(minMagnitude);
+
+            Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
+            bindPreferenceSummaryToValue(orderBy);
         }
 
         private void bindPreferenceSummaryToValue(Preference minMagnitude) {
@@ -31,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(minMagnitude.getContext());
             String preferenceString = preferences.getString(minMagnitude.getKey(), "");
             onPreferenceChange(minMagnitude, preferenceString);
+
         }
 
         @Override
